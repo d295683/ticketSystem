@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Event;
+use App\Notifications\DummyNotification;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +15,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+        User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'role' => 'admin',
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $users = User::factory(10)->create();
+        Event::factory(10)->create();
+
+        foreach ($users as $user) {
+            $notification = new DummyNotification([
+                'title' => fake()->sentence(5),
+                'body' => fake()->paragraph(3),
+            ]);
+
+            $user->notify($notification);
+        }
     }
 }
