@@ -1,18 +1,13 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="title">
+        Upcoming events
+    </x-slot>
 
-@php
-    use Carbon\Carbon;
-@endphp
-
-@section('title', 'Upcoming events')
-
-@section('header')
-    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        {{ __('Upcoming events') }}
-    </h2>
-@endsection
-
-@section('content')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Upcoming events') }}
+        </h2>
+    </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -29,10 +24,10 @@
                                     <div
                                         class="w-16 h-16 rounded bg-gray-700 flex flex-col items-center justify-center mb-4 md:mb-0 md:mr-4">
                                         <div class="text-2xl font-bold mb-1">
-                                            {{ Carbon::parse($event->datetime)->format('d') }}
+                                            {{ Carbon\Carbon::parse($event->datetime)->format('d') }}
                                         </div>
                                         <div class="text-sm text-gray-300">
-                                            {{ Carbon::parse($event->datetime)->format('M') }}
+                                            {{ Carbon\Carbon::parse($event->datetime)->format('M') }}
                                         </div>
                                     </div>
                                     <div class="w-full max-w-[75%] md:w-auto md:flex-grow md:mr-4">
@@ -40,7 +35,7 @@
                                             <h2 class="text-2xl font-bold text-gray-100">{{ $event->title }}</h2>
                                             <p class="text-md text-gray-250">{{ $event->description }}</p>
                                             <p class="text-md text-gray-400">Time:
-                                                {{ Carbon::parse($event->datetime)->format('H:i') }}</p>
+                                                {{ Carbon\Carbon::parse($event->datetime)->format('H:i') }}</p>
                                             <p class="text-md text-gray-400">Location: {{ $event->location }}</p>
                                         </div>
                                     </div>
@@ -71,4 +66,4 @@
         </div>
     </div>
 
-@endsection
+</x-app-layout>

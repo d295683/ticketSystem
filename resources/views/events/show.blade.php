@@ -1,19 +1,14 @@
-@extends('layouts.app')
+<x-app-layout>
 
-@php
-    use Carbon\Carbon;
-@endphp
+    <x-slot name="title">
+        Event details
+    </x-slot>
 
-@section('title', 'Event details')
-
-{{-- @section('header')
-    <a href="{{ route('events.index') }}"
-        class="bg-gray-600 text-white px-4 py-2 rounded-md hover:scale-105 transition-transform duration-300">
-        Back to events
-    </a>
-@endsection --}}
-
-@section('content')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Event details') }}
+        </h2>
+    </x-slot>
 
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
@@ -33,8 +28,8 @@
                     <div class="mt-4 flex justify-between items-center">
                         <div>
                             <p><strong>Location:</strong> {{ $event->location }}</p>
-                            <p><strong>Date:</strong> {{ Carbon::parse($event->datetime)->format('d-m-Y') }}</p>
-                            <p><strong>Time:</strong> {{ Carbon::parse($event->datetime)->format('H:i') }}</p>
+                            <p><strong>Date:</strong> {{ Carbon\Carbon::parse($event->datetime)->format('d-m-Y') }}</p>
+                            <p><strong>Time:</strong> {{ Carbon\Carbon::parse($event->datetime)->format('H:i') }}</p>
                         </div>
                         <div>
                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -46,5 +41,4 @@
             </div>
         </div>
     </div>
-
-@endsection
+</x-app-layout>
