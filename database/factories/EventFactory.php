@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,13 +17,19 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
+
+        $tickets = $this->faker->numberBetween(0, 100);
+        $ticketsSold = $this->faker->numberBetween(0, $tickets);
+        $ticketsAvailable = $tickets - $ticketsSold;
         return [
             'title' => $this->faker->text(20),
-            'date' => $this->faker->date,
-            'time' => $this->faker->time,
+            'datetime' => $this->faker->dateTimeBetween('-1 years', '+2 years'),
             'description' => $this->faker->text,
-            'location' => $this->faker->text,
+            'location' => $this->faker->city(),
             'image' => 'https://picsum.photos/seed/picsum/1920/1080',
+            'tickets' => $tickets,
+            'tickets_sold' => $ticketsSold,
+            'tickets_available' => $ticketsAvailable,
             'price' => $this->faker->randomFloat(2, 0, 99.99),
         ];
     }

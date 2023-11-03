@@ -13,8 +13,35 @@ class EventController extends Controller
     public function index()
     {
         //
-        $events = Event::all();
-        return view('events', compact('events'));
+        // Get all events from the database and order them by datetime
+        $events = Event::orderBy('datetime', 'asc')->get()
+            // Group events by year
+            ->groupBy(function ($event) {
+                return $event->datetime->format('Y');
+            })
+            // Map through each year group and filter out events that are not today or in the future
+            ->map(function ($yearGroup) {
+                return $yearGroup->filter(function ($event) {
+                    return $event->datetime->isToday() || $event->datetime->isFuture();
+                });
+            })
+            // Filter out year groups that are empty
+            ->filter(function ($yearGroup) {
+                return $yearGroup->isNotEmpty();
+            });
+
+        return view('events.index', compact('events'));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Event $event)
+    {
+        // Get the event from the database
+        $event = Event::findOrFail($event->id);
+
+        return view('events.show', compact('event'));
     }
 
     /**
@@ -33,13 +60,6 @@ class EventController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Event $event)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.

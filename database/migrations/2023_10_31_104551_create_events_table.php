@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->date('date');
-            $table->time('time');
+            $table->dateTime('datetime');
             $table->string('location');
             $table->double('price', 10, 2);
             $table->string('image');
+            $table->integer('tickets');
+            $table->integer('tickets_sold');
+            $table->integer('tickets_available');
             $table->timestamps();
         });
     }

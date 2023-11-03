@@ -20,7 +20,7 @@
                         {{ __('Homepage') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('events')" :active="request()->routeIs('events')">
+                    <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
                         {{ __('Events') }}
                     </x-nav-link>
 
