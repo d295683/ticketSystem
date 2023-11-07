@@ -40,15 +40,13 @@
                                         </div>
                                     </div>
                                     <div
-                                        class="w-full md:w-auto md:flex-grow mt-4 md:mt-0 flex justify-center md:justify-end">
-                                        <div class="flex justify-between items-center">
+                                        class="w-full md:w-auto md:flex-grow mt-4 md:mt-0 flex  justify-center md:justify-end">
+                                        <div class="flex flex-col gap-3 justify-between items-center">
                                             <span
                                                 class="text-2xl font-bold text-gray-100 mr-4">&euro;{{ $event->price }}</span>
-                                            <div class="flex flex-col items-center">
-                                                <span
-                                                    class="text-2xl font-bold text-gray-100">{{ $event->tickets_available }}</span>
-                                                <span class="text-2xl font-bold text-gray-100">left</span>
-                                            </div>
+                                            <span
+                                                class="text-2xl font-bold text-gray-400">{{ $event->tickets_available }}
+                                                left</span>
                                         </div>
                                     </div>
                                 </a>
