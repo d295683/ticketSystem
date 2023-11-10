@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Role;
 use App\Notifications\DummyNotification;
 
 class DatabaseSeeder extends Seeder
@@ -15,18 +16,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $adminRole = Role::factory()->create([
+            'name' => 'admin',
+        ]);
+        $roles = Role::factory(25)->create();
+
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
-        User::factory()->create([
+        $adminUser = User::factory()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
-            'role' => 'admin',
         ]);
+        $adminUser->roles()->attach($adminRole->id);
 
-        $users = User::factory(10)->create();
-        Event::factory(10)->create();
+        $users = User::factory(100)->create();
+        Event::factory(100)->create();
 
         foreach ($users as $user) {
             $notification = new DummyNotification([
@@ -35,6 +41,8 @@ class DatabaseSeeder extends Seeder
             ]);
 
             $user->notify($notification);
+
+            $user->roles()->attach($roles->random(rand(1, 3))->pluck('id')->toArray());
         }
     }
 }

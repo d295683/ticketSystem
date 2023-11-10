@@ -27,6 +27,13 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    {{-- if the user is an admin, show the admin dashboard route --}}
+                    @if (Auth::user() && Auth::user()->hasRole('admin'))
+                        <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.*')">
+                            {{ __('Admin Panel') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -38,8 +45,9 @@
                             <button
                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                                 <div>{{ Auth::user()->name }}
-                                    @if (Auth::user()->role == 'admin')
-                                        <i class="fas fa-crown text-red-500"></i> <!-- This is the Font Awesome icon for a crown -->
+                                    @if (Auth::user()->hasRole('admin'))
+                                        <i class="fas fa-crown text-red-500"></i>
+                                        <!-- This is the Font Awesome icon for a crown -->
                                     @endif
                                 </div>
 
@@ -59,12 +67,11 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
-
-                            @if (Auth::user()->role == 'admin')
-                                <x-dropdown-link :href="route('homepage')">
+                            {{-- @if (Auth::user()->hasRole('admin'))
+                                <x-dropdown-link :href="route('admin.index')">
                                     {{ __('Admin Panel') }}
                                 </x-dropdown-link>
-                            @endif
+                            @endif --}}
 
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
@@ -128,9 +135,8 @@
             <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                 <div class="px-4">
                     <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}
-                        @if (Auth::user()->role == 'admin')
+                        @if (Auth::user()->hasRole('admin'))
                             <i class="fas fa-crown text-red-500"></i> <!-- This is the Font Awesome icon for a crown -->
-
                         @endif
                     </div>
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
@@ -141,11 +147,11 @@
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
 
-                    @if (Auth::user()->role == 'admin')
-                        <x-responsive-nav-link :href="route('homepage')">
+                    {{-- @if (Auth::user()->hasRole('admin'))
+                        <x-responsive-nav-link :href="route('admin.index')">
                             {{ __('Admin Panel') }}
                         </x-responsive-nav-link>
-                    @endif
+                    @endif --}}
 
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
