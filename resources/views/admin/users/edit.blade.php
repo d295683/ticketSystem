@@ -14,57 +14,72 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-gray-800 text-gray-200">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+
                     <form method="POST" action="{{ route('admin.users.update', $user) }}">
                         @csrf
-                        @method('PUT')
+                        @method('PATCH')
 
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-200" for="name">Name</label>
                             <input
                                 class="mt-1 block w-full py-2 px-3 border border-gray-600 rounded-md bg-gray-700 text-gray-200"
-                                id="name" name="name" type="text" value="{{ $user->name }}" required>
+                                id="name" name="name" type="text" value="{{ $user->name }}">
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-200" for="email">Email</label>
                             <input
                                 class="mt-1 block w-full py-2 px-3 border border-gray-600 rounded-md bg-gray-700 text-gray-200"
-                                id="email" name="email" type="email" value="{{ $user->email }}" required>
+                                id="email" name="email" type="email" value="{{ $user->email }}">
                         </div>
 
-                        <div class="mb-4" x-data="{ selectedRoles: [] }">
-                            <label class="block text-sm font-medium text-gray-200" for="roles">Role(s)</label>
-                            <x-dropdown align="top" width="0" contentClasses="overflow-scroll h-64 w-64">
-                                <x-slot name="trigger">
-                                    <span
-                                        class="mt-1 block w-full py-2 px-3 border border-gray-600 rounded-md bg-gray-700 text-gray-200 cursor-pointer"
-                                        x-text="selectedRoles.length > 0 ? selectedRoles.join(', ') : 'Select roles'"></span>
-                                </x-slot>
+                        <div class="mb-4" x-data="{ open: false, search: '' }">
+                            <span class="block text-sm font-medium text-gray-200">Roles</span>
+                            <div @click="open = !open"
+                                class="mt-1 block text-sm font-medium text-gray-200 cursor-pointer bg-gray-700 p-2 rounded-md">
+                                Roles
+                                <span x-show="!open" class="float-right">&plus;</span>
+                                <span x-show="open" class="float-right">&minus;</span>
+                            </div>
 
-                                <x-slot name="content">
+                            <div x-show="open" class="relative" @click.away="open = false">
+                                <div
+                                    class="absolute z-10 w-full bg-gray-700 rounded-md shadow-lg max-h-80 overflow-auto">
+                                    <input type="text" x-model="search" placeholder="Search roles"
+                                        class="mb-2 block w-full py-2 px-3 border border-gray-600 rounded-md bg-gray-700 text-gray-200">
+
                                     @foreach ($roles as $role)
-                                        <div x-data="{ checked: false }" class="p-4 h-10 flex items-center" :class="{ 'border-l-4 pl-3': checked }">
-                                            <input x-model="checked" class="hidden" type="checkbox"
-                                                id="{{ $role->id }}"
-                                                :checked="selectedRoles.includes('{{ $role->name }}')"
-                                                @click="selectedRoles.includes('{{ $role->name }}') ? selectedRoles.splice(selectedRoles.indexOf('{{ $role->name }}'), 1) : selectedRoles.push('{{ $role->name }}')">
-                                            <label
-                                                for="{{ $role->id }}">{{ $role->name }}</label>
+                                        <div class="m-2 p-2 border-2 border-gray-600 rounded-md bg-gray-700 text-gray-200 cursor-pointer"
+                                            @click="selected = !selected; $event.target.classList.toggle('border-indigo-500')"
+                                            x-data="{ selected: {{ $user->roles->contains($role) ? 'true' : 'false' }} }" x-bind:class="{ 'border-indigo-500': selected }"
+                                            x-show="search === '' || '{{ $role->name }}'.toLowerCase().includes(search.toLowerCase())">
+                                            <input type="checkbox" name="roles[]" value="{{ $role->id }}"
+                                                x-model="selected" class="hidden">
+                                            {{ $role->name }}
                                         </div>
                                     @endforeach
-                                </x-slot>
-                            </x-dropdown>
-
-                            <input type="hidden" name="roles" :value="selectedRoles" value="Selected roles">
+                                </div>
+                            </div>
                         </div>
 
-                        <div>
+                        <div class="flex justify-between">
                             <button type="submit"
                                 class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Update
                             </button>
+
+                            <button type="submit" form="delete-form"
+                                class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                Delete
+                            </button>
                         </div>
+                    </form>
+
+                    {{-- delete form --}}
+                    <form id="delete-form" method="POST" action="{{ route('admin.users.destroy', $user) }}">
+                        @csrf
+                        @method('DELETE')
                     </form>
                 </div>
             </div>

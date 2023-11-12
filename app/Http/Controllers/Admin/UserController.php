@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -40,7 +41,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
         //
     }
@@ -48,9 +49,9 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        $user = User::findOrFail($id);
+        $user = User::findOrfail($user->id);
         $roles = Role::all();
 
         return view('admin.users.edit', compact('user', 'roles'));
@@ -59,16 +60,52 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $messages = [
+            'name.required' => 'Name is required',
+            'email.required' => 'Email is required',
+            'email.email' => 'Email is not valid',
+            'roles.required' => 'Roles cannot be empty',
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'roles' => 'required',
+        ], $messages);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('admin.users.edit', ['user' => $user->id])
+                ->with('error', $validator->errors()->first())
+                ->withInput();
+        }
+
+        // update user
+        $user = User::findOrFail($user->id);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+
+        // sync roles with user
+        $user->roles()->sync($request->input('roles'));
+
+        // save user
+        $user->save();
+
+        return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user = User::findOrFail($user->id);
+
+        // delete user
+        $user->delete();
+
+        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully');
     }
 }

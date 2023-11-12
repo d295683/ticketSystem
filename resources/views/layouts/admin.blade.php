@@ -47,7 +47,7 @@
                                     {{ __('Manage Users') }}
                                 </x-nav-link>
 
-                                <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')">
+                                <x-nav-link :href="route('admin.events.index')" :active="request()->routeIs('admin.events.*')">
                                     {{ __('Manage Events') }}
                                 </x-nav-link>
 
@@ -66,6 +66,10 @@
 
         <!-- Page Content -->
         <main>
+
+            {{-- display notifications and messages --}}
+            @include('components.notification')
+
             {{ $slot }}
         </main>
     </div>

@@ -15,55 +15,56 @@
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <table class="min-w-full divide-y divide-gray-600">
-                        <thead class="bg-gray-700">
-                            <tr>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
-                                    ID
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
-                                    Name
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
-                                    Email
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
-                                    Role(s)
-                                </th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-gray-800 divide-y divide-gray-600">
-                            @foreach ($users as $user)
+                    <div class="overflow-x-scroll mb-4">
+                        <table class="min-w-full divide-y divide-gray-600">
+                            <thead class="bg-gray-700">
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $user->id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $user->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $user->email }}</td>
-                                    {{-- <td class="px-6 py-4 whitespace-nowrap">{{ implode(', ', $user->roles()->pluck('name')->toArray()) }}</td> --}}
-                                    <td class="px-6 py-4">
-                                        @foreach ($user->roles as $role)
-                                            <span
-                                                class="bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">
-                                                {{ $role->name }}
-                                            </span>
-                                        @endforeach
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="{{ route('admin.users.edit', $user) }}"
-                                            class="text-indigo-400 hover:text-indigo-600">Edit</a>
-                                    </td>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
+                                        ID
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
+                                        Name
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
+                                        Email
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
+                                        Role(s)
+                                    </th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
+                                        Actions
+                                    </th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
+                            </thead>
+                            <tbody class="bg-gray-800 divide-y divide-gray-600">
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $user->id }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $user->name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $user->email }}</td>
+                                        {{-- <td class="px-6 py-4 whitespace-nowrap">{{ implode(', ', $user->roles()->pluck('name')->toArray()) }}</td> --}}
+                                        <td class="px-6 py-4">
+                                            @foreach ($user->roles as $role)
+                                                <span
+                                                    class="bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">
+                                                    {{ $role->name }}
+                                                </span>
+                                            @endforeach
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <a href="{{ route('admin.users.edit', $user) }}"
+                                                class="text-indigo-400 hover:text-indigo-600">Edit</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     {{ $users->links('vendor.pagination.custom') }}
                 </div>
             </div>

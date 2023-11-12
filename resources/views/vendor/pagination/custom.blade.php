@@ -12,27 +12,27 @@
         <div class="flex">
             <!-- First Page Link -->
             @if ($paginator->currentPage() > 6)
-                <a class="px-2 hover:bg-gray-700 text-blue-500 hover:text-white rounded" href="{{ $paginator->url(1) }}">1</a>
-                <span class="px-2">...</span>
+                <a class="w-8 h-8 flex items-center justify-center hover:bg-gray-700 text-blue-500 hover:text-white rounded" href="{{ $paginator->url(1) }}">1</a>
+                <span class="w-8 h-8 flex items-center justify-center">...</span>
             @endif
 
             <!-- Pages around current page -->
             @foreach (range(max($paginator->currentPage() - 5, 1), min($paginator->currentPage() + 5, $paginator->lastPage())) as $page)
                 @if ($page == $paginator->currentPage())
-                    <span class="px-2 bg-gray-700 text-white rounded">{{ $page }}</span>
+                    <span class="w-8 h-8 flex items-center justify-center bg-blue-500 text-white rounded">{{ $page }}</span>
                 @else
-                    <a class="px-2 hover:bg-gray-700 text-blue-500 hover:text-white rounded" href="{{ $paginator->url($page) }}">{{ $page }}</a>
+                    <a class="w-8 h-8 flex items-center justify-center hover:bg-gray-700 text-blue-500 hover:text-white rounded" href="{{ $paginator->url($page) }}">{{ $page }}</a>
                 @endif
             @endforeach
 
             <!-- Dots -->
             @if ($paginator->currentPage() < $paginator->lastPage() - 5)
-                <span class="px-2">...</span>
+                <span class="w-8 h-8 flex items-center justify-center">...</span>
             @endif
 
             <!-- Last Page Link -->
             @if ($paginator->currentPage() < $paginator->lastPage() - 5)
-                <a class="px-2 hover:bg-gray-700 text-blue-500 hover:text-white rounded" href="{{ $paginator->url($paginator->lastPage()) }}">{{ $paginator->lastPage() }}</a>
+                <a class="w-8 h-8 flex items-center justify-center hover:bg-gray-700 text-blue-500 hover:text-white rounded" href="{{ $paginator->url($paginator->lastPage()) }}">{{ $paginator->lastPage() }}</a>
             @endif
         </div>
 
