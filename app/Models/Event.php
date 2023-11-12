@@ -20,10 +20,9 @@ class Event extends Model
         'datetime' => 'datetime',
         'location' => 'string',
         'price' => 'double',
-        'image' => 'string',
+        'image_url' => 'string',
         'tickets' => 'integer',
         'tickets_sold' => 'integer',
-        'ticketsAvailable' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

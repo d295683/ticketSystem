@@ -18,10 +18,9 @@ return new class extends Migration
             $table->dateTime('datetime');
             $table->string('location');
             $table->double('price', 10, 2);
-            $table->string('image');
+            $table->string('image_url');
             $table->integer('tickets');
-            $table->integer('tickets_sold');
-            $table->integer('tickets_available');
+            $table->integer('tickets_sold')->default(0);
             $table->timestamps();
         });
     }

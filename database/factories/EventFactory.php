@@ -26,10 +26,9 @@ class EventFactory extends Factory
             'datetime' => $this->faker->dateTimeBetween('-1 years', '+2 years'),
             'description' => $this->faker->text,
             'location' => $this->faker->city(),
-            'image' => 'https://picsum.photos/seed/picsum/1920/1080',
+            'image_url' => 'https://picsum.photos/seed/picsum/1920/1080',
             'tickets' => $tickets,
             'tickets_sold' => $ticketsSold,
-            'tickets_available' => $ticketsAvailable,
             'price' => $this->faker->randomFloat(2, 0, 99.99),
         ];
     }

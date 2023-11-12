@@ -24,14 +24,14 @@
                             <label class="block text-sm font-medium text-gray-200" for="name">Name</label>
                             <input
                                 class="mt-1 block w-full py-2 px-3 border border-gray-600 rounded-md bg-gray-700 text-gray-200"
-                                id="name" name="name" type="text" value="{{ $user->name }}">
+                                id="name" name="name" type="text" value="{{ old('name', $user->name) }}">
                         </div>
 
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-200" for="email">Email</label>
                             <input
                                 class="mt-1 block w-full py-2 px-3 border border-gray-600 rounded-md bg-gray-700 text-gray-200"
-                                id="email" name="email" type="email" value="{{ $user->email }}">
+                                id="email" name="email" type="email" value="{{ old('email', $user->email) }}">
                         </div>
 
                         <div class="mb-4" x-data="{ open: false, search: '' }">
@@ -48,11 +48,10 @@
                                     class="absolute z-10 w-full bg-gray-700 rounded-md shadow-lg max-h-80 overflow-auto">
                                     <input type="text" x-model="search" placeholder="Search roles"
                                         class="mb-2 block w-full py-2 px-3 border border-gray-600 rounded-md bg-gray-700 text-gray-200">
-
                                     @foreach ($roles as $role)
                                         <div class="m-2 p-2 border-2 border-gray-600 rounded-md bg-gray-700 text-gray-200 cursor-pointer"
                                             @click="selected = !selected; $event.target.classList.toggle('border-indigo-500')"
-                                            x-data="{ selected: {{ $user->roles->contains($role) ? 'true' : 'false' }} }" x-bind:class="{ 'border-indigo-500': selected }"
+                                            x-data="{ selected: {{ (old('roles') ? in_array($role->id, old('roles')) : $user->roles->contains($role)) ? 'true' : 'false' }} }" x-bind:class="{ 'border-indigo-500': selected }"
                                             x-show="search === '' || '{{ $role->name }}'.toLowerCase().includes(search.toLowerCase())">
                                             <input type="checkbox" name="roles[]" value="{{ $role->id }}"
                                                 x-model="selected" class="hidden">

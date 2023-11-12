@@ -33,7 +33,10 @@
                                     <div class="w-full max-w-[75%] md:w-auto md:flex-grow md:mr-4">
                                         <div class="text-center md:text-left">
                                             <h2 class="text-2xl font-bold text-gray-100">{{ $event->title }}</h2>
-                                            <p class="text-md text-gray-250">{{ $event->description }}</p>
+                                            {{-- <p class="text-md text-gray-250">{{ $event->description }}</p> --}}
+                                            <p class="text-md text-gray-250">
+                                                {{ Str::limit(strip_tags($event->description), 100) }}
+                                            </p>
                                             <p class="text-md text-gray-400">Time:
                                                 {{ Carbon\Carbon::parse($event->datetime)->format('H:i') }}</p>
                                             <p class="text-md text-gray-400">Location: {{ $event->location }}</p>
@@ -45,7 +48,7 @@
                                             <span
                                                 class="text-2xl font-bold text-gray-100 mr-4">&euro;{{ $event->price }}</span>
                                             <span
-                                                class="text-2xl font-bold text-gray-400">{{ $event->tickets_available }}
+                                                class="text-2xl font-bold text-gray-400">{{ $event->tickets - $event->tickets_sold }}
                                                 left</span>
                                         </div>
                                     </div>

@@ -36,12 +36,12 @@ Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->gro
 
     Route::prefix('/events')->name('events.')->group(function () {
         Route::get('/', [AdminEventController::class, 'index'])->name('index');
-        // Route::get('/create', [AdminController::class, 'create'])->name('create');
-        // Route::post('/', [AdminController::class, 'store'])->name('store');
-        // Route::get('/{event}', [AdminController::class, 'show'])->name('show');
-        // Route::get('/{event}/edit', [AdminController::class, 'edit'])->name('edit');
-        // Route::patch('/{event}', [AdminController::class, 'update'])->name('update');
-        // Route::delete('/{event}', [AdminController::class, 'destroy'])->name('destroy');
+        Route::get('/create', [AdminEventController::class, 'create'])->name('create');
+        Route::post('/', [AdminEventController::class, 'store'])->name('store');
+        Route::get('/{event}', [AdminEventController::class, 'show'])->name('show');
+        Route::get('/{event}/edit', [AdminEventController::class, 'edit'])->name('edit');
+        Route::patch('/{event}', [AdminEventController::class, 'update'])->name('update');
+        Route::delete('/{event}', [AdminEventController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('/users')->name('users.')->group(function () {

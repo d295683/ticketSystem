@@ -15,15 +15,16 @@
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex flex-col">
-                        <img class="w-full rounded-lg mb-4" src="{{ $event->image }}" alt="Event Image">
+                        <img class="w-full rounded-lg mb-4" src="{{ $event->image_url }}" alt="Event Image">
                         <div class="flex justify-between">
                             <h2 class="text-2xl font-bold">{{ $event->title }}</h2>
                             <p class="text-2xl">&euro;{{ $event->price }}</p>
                         </div>
-                        <p class="text-lg">{{ $event->tickets_available }} Tickets Available</p>
+                        <p class="text-lg">{{ $event->tickets - $event->tickets_sold }} Tickets Available</p>
                     </div>
                     <div class="mt-4">
-                        <p>{{ $event->description }}</p>
+                        {{-- <p>{{ $event->description }}</p> --}}
+                        {!! $event->description !!}
                     </div>
                     <div class="mt-4 flex justify-between items-center">
                         <div>
