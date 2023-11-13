@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.trix-button-row .trix-button-group {
+    @apply space-x-2 border border-transparent;
+}
+
+.trix-button-row .trix-button-group .trix-button {
+    @apply border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-500 hover:bg-gray-400 hover:scale-105 transition-transform;
+}
+
+.trix-button-row .trix-button-group .trix-button.trix-active {
+    @apply bg-blue-500 hover:bg-blue-400 shadow-lg;
+}
