@@ -27,11 +27,6 @@
                                 id="title" name="title" type="text" value="{{ old('title', $event->title) }}">
                         </div>
 
-                        {{-- <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-200" for="description">Description</label>
-                            <textarea class="mt-1 block w-full py-2 px-3 border border-gray-600 rounded-md bg-gray-700 text-gray-200"
-                                id="description" name="description">{{ old('description', $event->description ?? '') }}</textarea>
-                        </div> --}}
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-200" for="description">Description</label>
                             <input id="description" type="hidden" name="description"

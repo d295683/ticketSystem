@@ -38,7 +38,6 @@ Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->gro
         Route::get('/', [AdminEventController::class, 'index'])->name('index');
         Route::get('/create', [AdminEventController::class, 'create'])->name('create');
         Route::post('/', [AdminEventController::class, 'store'])->name('store');
-        Route::get('/{event}', [AdminEventController::class, 'show'])->name('show');
         Route::get('/{event}/edit', [AdminEventController::class, 'edit'])->name('edit');
         Route::patch('/{event}', [AdminEventController::class, 'update'])->name('update');
         Route::delete('/{event}', [AdminEventController::class, 'destroy'])->name('destroy');
@@ -46,7 +45,6 @@ Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->gro
 
     Route::prefix('/users')->name('users.')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('index');
-        Route::get('/{user}', [AdminUserController::class, 'show'])->name('show');
         Route::get('/{user}/edit', [AdminUserController::class, 'edit'])->name('edit');
         Route::patch('/{user}', [AdminUserController::class, 'update'])->name('update');
         Route::delete('/{user}', [AdminUserController::class, 'destroy'])->name('destroy');
