@@ -20,6 +20,15 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/';
 
     /**
+     * The path to your application's "super home" route.
+     *
+     * Typically, users with a super role are redirected here after authentication.
+     *
+     * @var string
+     */
+    public const SUPER_HOME = '/admin';
+
+    /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
     public function boot(): void
