@@ -28,7 +28,6 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    {{-- if the user is an admin, show the admin dashboard route --}}
                     @if (Auth::user() && Auth::user()->hasRole('admin'))
                         <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.*')">
                             {{ __('Admin Panel') }}
@@ -128,6 +127,13 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if (Auth::user() && Auth::user()->hasRole('admin'))
+                <x-responsive-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.*')">
+                    {{ __('Admin Panel') }}
+                </x-responsive-nav-link>
+            @endif
+
         </div>
 
         @auth

@@ -63,17 +63,27 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                
+                <div class="block sm:hidden px-6 py-4">
+                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                        {{ __('Manage Users') }}
+                    </x-nav-link>
 
+                    <x-nav-link :href="route('admin.events.index')" :active="request()->routeIs('admin.events.*')">
+                        {{ __('Manage Events') }}
+                    </x-nav-link>
 
+                    <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
+                        {{ __('Manage Tickets') }}
+                    </x-nav-link>
                 </div>
             </header>
         @endif
 
         <!-- Page Content -->
         <main>
-
-            {{-- display notifications and messages --}}
-            @include('components.notification')
+            <x-notification />
 
             {{ $slot }}
         </main>
