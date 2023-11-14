@@ -10,6 +10,39 @@ use Illuminate\Http\Request;
 class EventController extends Controller
 {
     /**
+     * @var array $rules A list of validation rules for the controller
+     */
+    protected $rules = [
+        'title' => 'required|string',
+        'description' => 'required|string',
+        'datetime' => 'required|date',
+        'location' => 'required|string',
+        'price' => 'required|numeric',
+        'image_url' => 'required|string',
+        'tickets' => 'required|integer',
+    ];
+
+    /**
+     * @var array $messages A list of messages to display when validation fails
+     */
+    protected $messages = [
+        'title.required' => 'Title is required',
+        'title.string' => 'Title must be a string',
+        'description.required' => 'Description is required',
+        'description.string' => 'Description must be a string',
+        'date.required' => 'Date and time is required',
+        'date.datetime' => 'Date and time must be a valid datetime',
+        'location.required' => 'Location is required',
+        'location.string' => 'Location must be a string',
+        'price.required' => 'Price is required',
+        'price.numeric' => 'Price must be a number',
+        'image_url.required' => 'Image URL is required',
+        'image_url.string' => 'Image URL must be a string',
+        'tickets.required' => 'Tickets is required',
+        'tickets.integer' => 'Tickets must be an integer',
+    ];
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -35,37 +68,12 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $messages = [
-            'title.required' => 'Title is required',
-            'title.string' => 'Title must be a string',
-            'description.required' => 'Description is required',
-            'description.string' => 'Description must be a string',
-            'date.required' => 'Date and time is required',
-            'date.datetime' => 'Date and time must be a valid datetime',
-            'location.required' => 'Location is required',
-            'location.string' => 'Location must be a string',
-            'price.required' => 'Price is required',
-            'price.numeric' => 'Price must be a number',
-            'image_url.required' => 'Image URL is required',
-            'image_url.string' => 'Image URL must be a string',
-            'tickets.required' => 'Tickets is required',
-            'tickets.integer' => 'Tickets must be an integer',
-        ];
-
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'datetime' => 'required|date',
-            'location' => 'required|string',
-            'price' => 'required|numeric',
-            'image_url' => 'required|string',
-            'tickets' => 'required|integer',
-        ], $messages);
+        $validator = Validator::make($request->all(), $this->rules, $this->messages);
 
         if ($validator->fails()) {
             return redirect()
                 ->route('admin.events.create')
-                ->with('error', $validator->errors()->first())
+                ->with('error', $validator->errors())
                 ->withInput();
         }
 
@@ -109,37 +117,12 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        $messages = [
-            'title.required' => 'Title is required',
-            'title.string' => 'Title must be a string',
-            'description.required' => 'Description is required',
-            'description.string' => 'Description must be a string',
-            'date.required' => 'Date and time is required',
-            'date.datetime' => 'Date and time must be a valid datetime',
-            'location.required' => 'Location is required',
-            'location.string' => 'Location must be a string',
-            'price.required' => 'Price is required',
-            'price.numeric' => 'Price must be a number',
-            'image_url.required' => 'Image URL is required',
-            'image_url.string' => 'Image URL must be a string',
-            'tickets.required' => 'Tickets is required',
-            'tickets.integer' => 'Tickets must be an integer',
-        ];
-
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'datetime' => 'required|date',
-            'location' => 'required|string',
-            'price' => 'required|numeric',
-            'image_url' => 'required|string',
-            'tickets' => 'required|integer',
-        ], $messages);
+        $validator = Validator::make($request->all(), $this->rules, $this->messages);
 
         if ($validator->fails()) {
             return redirect()
                 ->route('admin.events.edit', ['event' => $event->id])
-                ->with('error', $validator->errors()->first())
+                ->with('error', $validator->errors())
                 ->withInput();
         }
 

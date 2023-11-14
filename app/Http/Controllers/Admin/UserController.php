@@ -11,6 +11,28 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
+     * @var array $rules A list of validation rules for the controller
+     */
+    protected $rules = [
+        'name' => 'required',
+        'email' => 'required|email',
+        // 'roles' => 'required',
+        'roles' => 'required|array|min:1',
+    ];
+
+    /**
+     * @var array $messages A list of messages to display when validation fails
+     */
+    protected $messages = [
+        'name.required' => 'Name is required',
+        'email.required' => 'Email is required',
+        'email.email' => 'Email is not valid',
+        'roles.required' => 'Roles cannot be empty',
+        'roles.array' => 'Roles must be an array',
+        'roles.min' => 'Roles cannot be empty',
+    ];
+
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -62,23 +84,12 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $messages = [
-            'name.required' => 'Name is required',
-            'email.required' => 'Email is required',
-            'email.email' => 'Email is not valid',
-            'roles.required' => 'Roles cannot be empty',
-        ];
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'roles' => 'required',
-        ], $messages);
+        $validator = Validator::make($request->all(), $this->rules, $this->messages);
 
         if ($validator->fails()) {
             return redirect()
                 ->route('admin.users.edit', ['user' => $user->id])
-                ->with('error', $validator->errors()->first())
+                ->with('error', $validator->errors())
                 ->withInput();
         }
 
