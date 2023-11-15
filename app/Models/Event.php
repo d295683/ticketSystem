@@ -22,8 +22,20 @@ class Event extends Model
         'price' => 'double',
         'image_url' => 'string',
         'tickets' => 'integer',
-        'tickets_sold' => 'integer',
+        // 'tickets_sold' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function ticketsSold()
+    {
+        return $this->reservations()->with('tickets')->get()->sum(function ($reservation) {
+            return $reservation->tickets->count();
+        });
+    }
 }

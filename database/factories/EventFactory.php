@@ -28,7 +28,7 @@ class EventFactory extends Factory
             'location' => $this->faker->city(),
             'image_url' => 'https://picsum.photos/seed/picsum/1920/1080',
             'tickets' => $tickets,
-            'tickets_sold' => $ticketsSold,
+            // 'tickets_sold' => $ticketsSold,
             'price' => $this->faker->randomFloat(2, 0, 99.99),
         ];
     }

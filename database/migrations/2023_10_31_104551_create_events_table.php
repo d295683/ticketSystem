@@ -20,7 +20,7 @@ return new class extends Migration
             $table->double('price', 10, 2);
             $table->string('image_url');
             $table->integer('tickets');
-            $table->integer('tickets_sold')->default(0);
+            // $table->integer('tickets_sold')->default(0);
             $table->timestamps();
         });
     }
