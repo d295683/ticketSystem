@@ -17,7 +17,13 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
         if (!Auth::check() || !$request->user()->hasRole($roles)) {
-            return abort(403);
+            if (in_array('api', $request->route()->middleware())) {
+                // This is an API request, return a JSON response
+                return response()->json(['code' => 403, 'error' => 'Unauthorized'], 403);
+            } else {
+                // This is a web request, return a view response
+                abort(403, 'Unauthorized');
+            }
         }
 
         return $next($request);
