@@ -20,7 +20,7 @@
                             <h2 class="text-2xl font-bold">{{ $event->title }}</h2>
                             <p class="text-2xl">&euro;{{ $event->price }}</p>
                         </div>
-                        <p class="text-lg">{{ $event->tickets - $event->tickets_sold }} Tickets Available</p>
+                        <p class="text-lg">{{ $event->ticketsLeft(); }} Tickets Available</p>
                     </div>
                     <div class="mt-4">
                         {{-- <p>{{ $event->description }}</p> --}}
@@ -33,9 +33,9 @@
                             <p><strong>Time:</strong> {{ Carbon\Carbon::parse($event->datetime)->format('H:i') }}</p>
                         </div>
                         <div>
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <a href="{{route('events.order', $event->id)}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Order Ticket
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

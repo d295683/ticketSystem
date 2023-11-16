@@ -38,4 +38,9 @@ class Event extends Model
             return $reservation->tickets->count();
         });
     }
+
+    public function ticketsLeft()
+    {
+        return $this->tickets - $this->ticketsSold();
+    }
 }

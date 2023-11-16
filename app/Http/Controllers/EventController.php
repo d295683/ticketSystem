@@ -3,10 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
+    /**
+     * @var array $rules A list of validation rules for the controller
+     */
+    protected $rules = [
+        'tickets' => 'required|integer|min:1'
+    ];
+
+    /**
+     * @var array $messages A list of messages to display when validation fails
+     */
+    protected $messages = [
+        'tickets.required' => 'The amount of tickets is required.',
+        'tickets.integer' => 'The amount of tickets must be a number.',
+        'tickets.min' => 'The amount of tickets must be at least 1.'
+    ];
+
     /**
      * Display a listing of the resource.
      */
@@ -27,50 +46,45 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        // Get the event from the database
-        $event = Event::findOrFail($event->id);
-
         return view('events.show', compact('event'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function order(Event $event)
     {
-        //
+        return view('events.order', compact('event'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function reserve(Request $request, Event $event)
     {
-        //
-    }
+        // Create the validator
+        $validator = Validator::make($request->all(), $this->rules, $this->messages);
 
+        // Check if the validation fails
+        if ($validator->fails()) {
+            return redirect()
+                ->route('events.order', $event)
+                ->with('error', $validator->errors())
+                ->withInput();
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Event $event)
-    {
-        //
-    }
+        $amount = $request->input('tickets');
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Event $event)
-    {
-        //
-    }
+        if ($amount > $event->ticketsLeft()) {
+            return redirect()->route('events.order', $event)->with('error', 'Not enough tickets available.');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Event $event)
-    {
-        //
+        $user = Auth::user();
+
+        $reservation = new Reservation();
+        $reservation->user_id = $user->id;
+        $reservation->event_id = $event->id;
+        $reservation->save();
+
+        // Create the tickets for the reservation
+        $reservation->tickets()->createMany(
+            array_fill(0, $amount, [])
+        );
+
+        return redirect()->route('events.show', $event)->with('success', 'Your reservation has been made!');
     }
 }

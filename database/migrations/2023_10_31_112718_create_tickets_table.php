@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('reservation_id')->constrained();
-            $table->string('code');
+            $table->string('code')->unique()->nullable();
             $table->boolean('is_used')->default(false);
             $table->timestamps();
         });

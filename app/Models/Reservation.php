@@ -23,4 +23,20 @@ class Reservation extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getStatus()
+{
+    $today = date('Y-m-d');
+    $eventDate = $this->event->datetime->format('Y-m-d');
+
+    if ($eventDate < $today) {
+        if ($this->tickets->every->scanned) {
+            return 'Historisch';
+        } else {
+            return 'Verlopen';
+        }
+    } else {
+        return 'Toekomstig';
+    }
+}
 }

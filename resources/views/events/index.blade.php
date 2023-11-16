@@ -47,7 +47,8 @@
                                             <span
                                                 class="text-2xl font-bold text-gray-100 mr-4">&euro;{{ $event->price }}</span>
                                             <span class="text-2xl font-bold text-gray-400">
-                                                {{ $event->tickets - $event->tickets_sold }} left</span>
+                                                {{ $event->ticketsLeft() . '/'. $event->tickets }} left
+                                            </span>
                                         </div>
                                     </div>
                                 </a>

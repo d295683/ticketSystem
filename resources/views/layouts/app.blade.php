@@ -37,6 +37,7 @@
 
         <!-- Page Content -->
         <main>
+            @include('components.notification')
             {{ $slot }}
         </main>
     </div>

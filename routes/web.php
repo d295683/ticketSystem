@@ -8,6 +8,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,13 +23,13 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 Route::get('/', [EventController::class, 'index'])->name('homepage');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::prefix('/events')->group(function () {
     Route::get('/', [EventController::class, 'index'])->name('events.index');
     Route::get('/{event}', [EventController::class, 'show'])->name('events.show');
+    Route::get('/{event}/order', [EventController::class, 'order'])->middleware('auth')->name('events.order');
+    Route::post('/{event}/reserve', [EventController::class, 'reserve'])->middleware('auth')->name('events.reserve');
 });
 
 Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
@@ -48,7 +49,6 @@ Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->gro
         Route::get('/{user}/edit', [AdminUserController::class, 'edit'])->name('edit');
         Route::patch('/{user}', [AdminUserController::class, 'update'])->name('update');
         Route::delete('/{user}', [AdminUserController::class, 'destroy'])->name('destroy');
-
     });
 });
 
