@@ -32,6 +32,7 @@ class ApiAuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'expires_at' => now()->addDays(7)->toDateTimeString()
         ]);
     }
 
@@ -44,11 +45,12 @@ class ApiAuthController extends Controller
             /** @var \App\Models\User $user */ // this prevents the error of $user->createToken() below
             $user = Auth::user();
 
-            $token = $user->createToken('auth_token', ['*'], now()->addDays(7))->plainTextToken;
+            $token = $user->createToken('auth_token', ['*'], now()->addSeconds(7))->plainTextToken;
 
             return response()->json([
                 'access_token' => $token,
                 'token_type' => 'Bearer',
+                'expires_at' => now()->addDays(7)->toDateTimeString()
             ]);
         } else {
             return response()->json(['error' => 'Invalid credentials'], 401);
@@ -75,6 +77,7 @@ class ApiAuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'expires_at' => now()->addDays(7)->toDateTimeString()
         ]);
     }
 }
