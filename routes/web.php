@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ReservationController;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,13 +24,21 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', [EventController::class, 'index'])->name('homepage');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::prefix('/dashboard')->name('dashboard.')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
 
-Route::prefix('/events')->group(function () {
-    Route::get('/', [EventController::class, 'index'])->name('events.index');
-    Route::get('/{event}', [EventController::class, 'show'])->name('events.show');
-    Route::get('/{event}/order', [EventController::class, 'order'])->middleware('auth')->name('events.order');
-    Route::post('/{event}/reserve', [EventController::class, 'reserve'])->middleware('auth')->name('events.reserve');
+    Route::prefix('/reservations')->name('reservations.')->group(function () {
+        Route::get('/', [ReservationController::class, 'index'])->name('index');
+        Route::get('/{reservation}', [ReservationController::class, 'show'])->name('show');
+        Route::get('/{reservation}/ticket', [ReservationController::class, 'ticket'])->name('ticket');
+    });
+});
+
+Route::prefix('/events')->name('events.')->group(function () {
+    Route::get('/', [EventController::class, 'index'])->name('index');
+    Route::get('/{event}', [EventController::class, 'show'])->name('show');
+    Route::get('/{event}/order', [EventController::class, 'order'])->middleware('auth')->name('order');
+    Route::post('/{event}/reserve', [EventController::class, 'reserve'])->middleware('auth')->name('reserve');
 });
 
 Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
@@ -52,10 +61,10 @@ Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->gro
     });
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::middleware('auth')->name('profile.')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('destroy');
 });
 
 require __DIR__ . '/auth.php';

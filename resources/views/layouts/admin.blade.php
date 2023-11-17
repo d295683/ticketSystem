@@ -56,15 +56,14 @@
                                     {{ __('Manage Events') }}
                                 </x-nav-link>
 
-                                {{-- <x-nav-link :href="route('admin.*')" :active="request()->routeIs('admin.*')"> --}}
                                 <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
-                                    {{ __('Manage Tickets') }}
+                                    {{ __('Manage Reservations') }}
                                 </x-nav-link>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="block sm:hidden px-6 py-4">
                     <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                         {{ __('Manage Users') }}

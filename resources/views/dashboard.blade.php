@@ -41,11 +41,11 @@
                                                 </th>
                                                 <th
                                                     class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
-                                                    Price
+                                                    Total
                                                 </th>
                                                 <th
                                                     class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
-                                                    Total
+                                                    Actions
                                                 </th>
                                             </tr>
                                         </thead>
@@ -65,9 +65,12 @@
                                                     <td class="px-6 py-4 whitespace-nowrap">
                                                         {{ $reservation->tickets->count() }}</td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        &euro;{{ $reservation->event->price }}</td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
                                                         &euro;{{ $reservation->tickets->count() * $reservation->event->price }}
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                            {{-- show reservation (dashboard.reservations) --}}
+                                                            <a href="{{ route('dashboard.reservations.show', $reservation) }}"
+                                                                class="text-indigo-600 hover:text-indigo-900">Show</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

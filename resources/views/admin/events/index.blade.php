@@ -70,9 +70,9 @@
                                             {{ Carbon\Carbon::parse($event->datetime)->format('d-m-Y H:i') }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $event->price }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->tickets_sold }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $event->ticketsSold() }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            {{ $event->tickets - $event->tickets_sold }}</td>
+                                            {{ $event->ticketsLeft() }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <a href="{{ route('admin.events.edit', $event) }}"
                                                 class="text-indigo-400 hover:text-indigo-600">Edit</a>
