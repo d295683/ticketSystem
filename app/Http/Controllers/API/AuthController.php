@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -10,7 +11,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 
 
-class ApiAuthController extends Controller
+class AuthController extends Controller
 {
     public function register(Request $request): JsonResponse
     {
@@ -45,7 +46,7 @@ class ApiAuthController extends Controller
             /** @var \App\Models\User $user */ // this prevents the error of $user->createToken() below
             $user = Auth::user();
 
-            $token = $user->createToken('auth_token', ['*'], now()->addSeconds(7))->plainTextToken;
+            $token = $user->createToken('auth_token', ['*'], now()->addDays(7))->plainTextToken;
 
             return response()->json([
                 'access_token' => $token,
