@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
@@ -12,23 +13,15 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $reservations = Auth::user()->reservations;
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        $reservationsByStatus = [
+            'Toekomstig' => $reservations->filter(fn ($reservation) => $reservation->getStatus() === 'Toekomstig'),
+            'Historisch' => $reservations->filter(fn ($reservation) => $reservation->getStatus() === 'Historisch'),
+            'Verlopen' => $reservations->filter(fn ($reservation) => $reservation->getStatus() === 'Verlopen'),
+        ];
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('dashboard.reservations.index', compact('reservationsByStatus'));
     }
 
     /**
@@ -36,30 +29,13 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation)
     {
-        //
-    }
+        if (Auth::id() !== $reservation->user_id) {
+            abort(403);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Reservation $reservation)
-    {
-        //
-    }
+        $event = $reservation->event;
+        $tickets = $reservation->tickets()->paginate(5);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reservation $reservation)
-    {
-        //
+        return view('dashboard.reservations.show', compact('event', 'reservation', 'tickets'));
     }
 }

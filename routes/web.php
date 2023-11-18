@@ -25,12 +25,16 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 Route::get('/', [EventController::class, 'index'])->name('homepage');
 
 Route::prefix('/dashboard')->name('dashboard.')->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('index');
+    Route::get('/', [ReservationController::class, 'index'])->name('index');
 
     Route::prefix('/reservations')->name('reservations.')->group(function () {
         Route::get('/', [ReservationController::class, 'index'])->name('index');
         Route::get('/{reservation}', [ReservationController::class, 'show'])->name('show');
-        Route::get('/{reservation}/ticket', [ReservationController::class, 'ticket'])->name('ticket');
+    });
+
+    Route::prefix('/tickets')->name('tickets.')->group(function () {
+        Route::get('/', [TicketController::class, 'index'])->name('index');
+        Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
     });
 });
 

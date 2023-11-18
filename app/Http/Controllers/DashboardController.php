@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
         $reservationsByStatus = $this->getReservationsByStatus();
 
-        return view('dashboard', compact('reservationsByStatus'));
+        return view('dashboard.reservations.index', compact('reservationsByStatus'));
     }
 
     private function getReservationsByStatus()
