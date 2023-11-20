@@ -14,7 +14,7 @@ class Ticket extends Model
      *
      * @var array
      */
-    protected $fillable = ['used'];
+    protected $fillable = ['used', 'code'];
 
     public function reservation()
     {

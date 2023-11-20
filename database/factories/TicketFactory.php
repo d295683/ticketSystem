@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Reservation;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ticket>
@@ -19,7 +20,8 @@ class TicketFactory extends Factory
     {
         return [
             'reservation_id' => Reservation::factory(),
-            'code' => $this->faker->uuid(),
+            // 'code' => $this->faker->uuid(),
+            'code' => Str::uuid(),
             'used' => fake()->boolean(50),
         ];
     }

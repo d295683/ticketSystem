@@ -30,7 +30,7 @@ class Reservation extends Model
     $eventDate = $this->event->datetime->format('Y-m-d');
 
     if ($eventDate < $today) {
-        if ($this->tickets->every->scanned) {
+        if ($this->tickets->every->used) {
             return 'Historisch';
         } else {
             return 'Verlopen';

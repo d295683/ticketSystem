@@ -7,6 +7,7 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
@@ -81,9 +82,11 @@ class EventController extends Controller
         $reservation->save();
 
         // Create the tickets for the reservation
-        $reservation->tickets()->createMany(
-            array_fill(0, $amount, [])
-        );
+        $ticketsData = collect(range(1, $amount))->map(function () {
+            return ['code' => (string) Str::uuid()];
+        });
+
+        $reservation->tickets()->createMany($ticketsData->toArray());
 
         return redirect()->route('events.show', $event)->with('success', 'Your reservation has been made!');
     }
