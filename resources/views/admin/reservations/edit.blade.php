@@ -95,10 +95,10 @@
                         @method('PATCH')
                     </form>
 
-                    {{-- <form id="delete-form" method="POST" action="{{ route('admin.reservations.destroy', $reservation) }}">
+                    <form id="delete-form" method="POST" action="{{ route('admin.reservations.destroy', $reservation) }}">
                         @csrf
                         @method('DELETE')
-                    </form> --}}
+                    </form>
                 </div>
             </div>
         </div>

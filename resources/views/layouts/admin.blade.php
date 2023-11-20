@@ -81,7 +81,9 @@
 
         <!-- Page Content -->
         <main>
-            <x-notification />
+            {{-- <x-notification /> --}}
+            @include('components.notification')
+
 
             {{ $slot }}
         </main>

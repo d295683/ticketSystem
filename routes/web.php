@@ -56,6 +56,7 @@ Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->gro
         Route::get('/{reservation}/tickets', [AdminReservationController::class, 'tickets'])->name('tickets');
         Route::patch('/{reservation}', [AdminReservationController::class, 'update'])->name('update');
         Route::patch('/{reservation}/reset', [AdminReservationController::class, 'reset'])->name('reset');
+        Route::delete('/{reservation}', [AdminReservationController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('/events')->name('events.')->group(function () {

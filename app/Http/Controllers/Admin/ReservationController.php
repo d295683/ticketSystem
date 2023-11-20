@@ -68,6 +68,17 @@ class ReservationController extends Controller
         return redirect()->back()->with('status', 'Tickets reset successfully');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Reservation $reservation)
+    {
+        $reservation->tickets()->delete();
+        $reservation->delete();
+
+        return redirect()->route('admin.reservations.index')->with('success', 'Reservation deleted successfully');
+    }
+
     public function tickets(Reservation $reservation)
     {
         // show all tickets in the pdf, each ticket on a new page
