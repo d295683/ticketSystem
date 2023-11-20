@@ -20,11 +20,11 @@
                         {{ __('Homepage') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
+                    <x-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')">
                         {{ __('Events') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
+                    <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.*')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
@@ -120,11 +120,11 @@
                 {{ __('Homepage') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('events.index')" :active="request()->routeIs('events.index')">
+            <x-responsive-nav-link :href="route('events.index')" :active="request()->routeIs('events.*')">
                 {{ __('Events') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
+            <x-responsive-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.*')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 

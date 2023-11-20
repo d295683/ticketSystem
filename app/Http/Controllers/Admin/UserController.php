@@ -37,7 +37,6 @@ class UserController extends Controller
      */
     public function index()
     {
-
         // get all users
         $users = User::paginate(10);
 

@@ -20,6 +20,7 @@ class TicketFactory extends Factory
         return [
             'reservation_id' => Reservation::factory(),
             'code' => $this->faker->uuid(),
+            'used' => fake()->boolean(50),
         ];
     }
 }

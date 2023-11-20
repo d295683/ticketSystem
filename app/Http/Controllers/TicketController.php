@@ -2,64 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use App\Models\Ticket;
-use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TicketController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Reservation $reservation)
     {
-        //
-    }
+        // only allow the user to view their own tickets
+        if ($reservation->user_id !== auth()->id()) {
+            abort(403);
+        }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        // show all tickets in the pdf, each ticket on a new page
+        $reservation->load('tickets', 'user', 'event');
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        // Load the view with necessary data
+        $view = view('pdf.tickets', [
+            'reservation' => $reservation,
+            'tickets' => $reservation->tickets,
+            'event' => $reservation->event,
+            'user' => $reservation->user,
+        ]);
+
+        // Convert the view to PDF
+        $pdf = Pdf::loadHTML($view->render());
+
+        // Return the PDF response
+        return $pdf->stream('tickets.pdf');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Ticket $ticket)
+    public function show(Reservation $reservation, Ticket $ticket)
     {
-        //
-    }
+        // only allow the user to view their own tickets
+        if ($reservation->user_id !== auth()->id()) {
+            abort(403);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ticket $ticket)
-    {
-        //
-    }
+        // show a single ticket in the pdf
+        $reservation->load('user', 'event');
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Ticket $ticket)
-    {
-        //
-    }
+        // Load the view with necessary data
+        $view = view('pdf.ticket', [
+            'ticket' => $ticket,
+            'event' => $reservation->event,
+            'user' => $reservation->user,
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ticket $ticket)
-    {
-        //
+        // Convert the view to PDF
+        $pdf = Pdf::loadHTML($view->render());
+
+        // Return the PDF response
+        return $pdf->stream('ticket.pdf');
     }
 }

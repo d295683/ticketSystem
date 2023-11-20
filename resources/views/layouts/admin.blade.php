@@ -56,7 +56,7 @@
                                     {{ __('Manage Events') }}
                                 </x-nav-link>
 
-                                <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
+                                <x-nav-link :href="route('admin.reservations.index')" :active="request()->routeIs('admin.reservations.*')">
                                     {{ __('Manage Reservations') }}
                                 </x-nav-link>
                             </div>
@@ -73,7 +73,7 @@
                         {{ __('Manage Events') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">
+                    <x-nav-link :href="route('admin.reservations.index')" :active="request()->routeIs('admin.reservations.*')">
                         {{ __('Manage Tickets') }}
                     </x-nav-link>
                 </div>

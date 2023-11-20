@@ -24,7 +24,7 @@ class EventFactory extends Factory
         return [
             'title' => $this->faker->text(20),
             'datetime' => $this->faker->dateTimeBetween('-1 years', '+2 years'),
-            'description' => $this->faker->text,
+            'description' => $this->faker->paragraphs(rand(1, 5), true),
             'location' => $this->faker->city(),
             'image_url' => 'https://picsum.photos/seed/picsum/1920/1080',
             'tickets' => $tickets,

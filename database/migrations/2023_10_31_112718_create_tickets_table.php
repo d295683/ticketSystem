@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('reservation_id')->constrained();
             $table->string('code')->unique()->nullable();
-            $table->boolean('is_used')->default(false);
+            $table->boolean('used')->default(false);
             $table->timestamps();
         });
     }

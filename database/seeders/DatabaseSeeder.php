@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
         User::factory(100)->create();
 
         $users = User::all();
-        
+
         foreach ($users as $user) {
             $notification = new DummyNotification([
                 'title' => fake()->sentence(5),

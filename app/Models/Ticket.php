@@ -9,6 +9,13 @@ class Ticket extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['used'];
+
     public function reservation()
     {
         return $this->belongsTo(Reservation::class);

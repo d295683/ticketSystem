@@ -8,8 +8,10 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ReservationController;
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,11 +32,10 @@ Route::prefix('/dashboard')->name('dashboard.')->middleware(['auth', 'verified']
     Route::prefix('/reservations')->name('reservations.')->group(function () {
         Route::get('/', [ReservationController::class, 'index'])->name('index');
         Route::get('/{reservation}', [ReservationController::class, 'show'])->name('show');
-    });
-
-    Route::prefix('/tickets')->name('tickets.')->group(function () {
-        Route::get('/', [TicketController::class, 'index'])->name('index');
-        Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
+        Route::prefix('/{reservation}/tickets')->name('tickets.')->group(function () {
+            Route::get('/', [TicketController::class, 'index'])->name('index');
+            Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
+        });
     });
 });
 
@@ -47,6 +48,15 @@ Route::prefix('/events')->name('events.')->group(function () {
 
 Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
+
+    Route::prefix('/reservations')->name('reservations.')->group(function() {
+        Route::get('/', [AdminReservationController::class, 'index'])->name('index');
+        Route::get('/{reservation}', [AdminReservationController::class, 'show'])->name('show');
+        Route::get('/{reservation}/edit', [AdminReservationController::class, 'edit'])->name('edit');
+        Route::get('/{reservation}/tickets', [AdminReservationController::class, 'tickets'])->name('tickets');
+        Route::patch('/{reservation}', [AdminReservationController::class, 'update'])->name('update');
+        Route::patch('/{reservation}/reset', [AdminReservationController::class, 'reset'])->name('reset');
+    });
 
     Route::prefix('/events')->name('events.')->group(function () {
         Route::get('/', [AdminEventController::class, 'index'])->name('index');
