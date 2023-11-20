@@ -23,8 +23,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js" defer></script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <!-- Include TRIX CSS & JS -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"></script>
@@ -35,6 +33,7 @@
 </head>
 
 <body class="font-sans antialiased">
+    <x-tailwind-indicator />
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
         @include('layouts.navigation')
 
