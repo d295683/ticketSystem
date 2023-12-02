@@ -23,7 +23,6 @@
                         <p class="text-lg">{{ $event->ticketsLeft(); }} Tickets Available</p>
                     </div>
                     <div class="mt-4">
-                        {{-- <p>{{ $event->description }}</p> --}}
                         {!! $event->description !!}
                     </div>
                     <div class="mt-4 flex justify-between items-center">

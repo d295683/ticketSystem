@@ -33,7 +33,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_at' => now()->addDays(7)->toDateTimeString()
+            'expires_at' => now()->addDays(7)->timestamp
         ]);
     }
 
@@ -51,7 +51,7 @@ class AuthController extends Controller
             return response()->json([
                 'access_token' => $token,
                 'token_type' => 'Bearer',
-                'expires_at' => now()->addDays(7)->toDateTimeString()
+                'expires_at' => now()->addDays(7)->timestamp
             ]);
         } else {
             return response()->json(['error' => 'Invalid credentials'], 401);
@@ -78,7 +78,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_at' => now()->addDays(7)->toDateTimeString()
+            'expires_at' => now()->addDays(7)->timestamp
         ]);
     }
 }

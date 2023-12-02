@@ -13,3 +13,45 @@
 .trix-button-row .trix-button-group .trix-button.trix-active {
     @apply bg-blue-500 hover:bg-blue-400 shadow-lg;
 }
+
+/* Multiselect Form */
+.form-multiselect {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.form-multiselect::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+.choices__list {
+    /* background-color: #374151;
+    color: white; */
+    @apply bg-gray-700 text-white;
+}
+
+.choices__inner {
+    /* background-color: #374151;
+    color: white; */
+    @apply block w-full border border-gray-600 rounded-md bg-gray-700 text-gray-200;
+}
+
+.choices__input {
+    /* min-width: fit-content;
+    background-color: #374151;
+    color: white;
+    border: 1px solid white; */
+    @apply bg-gray-700 text-gray-200 border-gray-200 border-none;
+}
+
+.choices__list .choices__item--selectable.is-highlighted,
+.choices__list .choices__item--selectable:hover {
+    /* background-color: #4B5563 !important;
+    color: white !important; */
+    @apply bg-gray-600 text-white;
+}
+
+/* .choices__input--cloned {
+    width: 35% !important;
+} */

@@ -17,8 +17,9 @@ class EventController extends Controller
         $events = Event::where('datetime', '>=', now())
             ->orderBy('datetime', 'asc')
             ->get()
-            ->groupBy(function ($event) {
-                return $event->datetime->format('Y');
+            ->map(function ($event) {
+                $event['tickets_left'] = $event->ticketsLeft();
+                return $event;
             });
 
         return response()->json($events);

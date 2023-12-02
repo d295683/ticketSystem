@@ -20,6 +20,7 @@
                         @csrf
                         @method('PATCH')
 
+                        
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-200" for="name">Name</label>
                             <input
@@ -34,7 +35,7 @@
                                 id="email" name="email" type="email" value="{{ old('email', $user->email) }}">
                         </div>
 
-                        <div class="mb-4" x-data="{ open: false, search: '' }">
+                        {{-- <div class="mb-4" x-data="{ open: false, search: '' }">
                             <span class="block text-sm font-medium text-gray-200">Roles</span>
                             <div @click="open = !open"
                                 class="mt-1 block text-sm font-medium text-gray-200 cursor-pointer bg-gray-700 p-2 rounded-md">
@@ -60,6 +61,18 @@
                                     @endforeach
                                 </div>
                             </div>
+                        </div> --}}
+
+                        <div class="mb-4">
+                            <label for="roles" class="block text-sm font-medium text-gray-200">Selecteer je rollen</label>
+                            <select name="roles[]" id="roles" multiple class="form-multiselect mt-1 block w-full py-2 px-3 border border-gray-600 rounded-md bg-gray-700 text-gray-200">
+                                <option value="0" class="pl-3 bg-gray-600" selected></option>
+                                @foreach ($roles as $role)
+                                    <option class="pl-3 bg-gray-600" value="{{ $role->id }}" {{ $user->roles->contains($role->id) ? 'selected' : '' }}>
+                                        {{ $role->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="flex justify-between">
@@ -84,4 +97,13 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var element = document.getElementById('roles');
+            var choices = new Choices(element, {
+                removeItemButton: true,
+                searchEnabled: false
+            });
+        });
+    </script>
 </x-admin-layout>
