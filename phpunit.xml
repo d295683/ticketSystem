@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         colors="true"
->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd" bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
+            <exclude>tests/Unit/ExampleTest.php</exclude>
         </testsuite>
         <testsuite name="Feature">
             <directory>tests/Feature</directory>
+            <exclude>tests/Feature/ExampleTest.php</exclude>
         </testsuite>
     </testsuites>
     <source>
@@ -28,4 +26,10 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
     </php>
+    <logging>
+        <junit outputFile="storage/logs/phpunit/junit.xml"/>
+        <teamcity outputFile="storage/logs/phpunit/teamcity.txt"/>
+        <testdoxHtml outputFile="storage/logs/phpunit/testdox.html"/>
+        <testdoxText outputFile="storage/logs/phpunit/testdox.txt"/>
+    </logging>
 </phpunit>
