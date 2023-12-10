@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Reservation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -88,6 +89,24 @@ class EventController extends Controller
 
         $reservation->tickets()->createMany($ticketsData->toArray());
 
-        return redirect()->route('events.show', $event)->with('success', 'Your reservation has been made!');
+        return redirect()->route('dashboard.reservations.show', $reservation)->with('success', 'Your reservation has been made!');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        $events = Event::where('datetime', '>=', now())
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%$search%")
+                    ->orWhere('location', 'like', "%$search%");
+            })
+            ->orderBy('datetime', 'asc')
+            ->get()
+            ->groupBy(function ($event) {
+                return $event->datetime->format('Y');
+            });
+
+        return view('events.search', compact('events'));
     }
 }

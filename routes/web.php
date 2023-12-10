@@ -41,6 +41,7 @@ Route::prefix('/dashboard')->name('dashboard.')->middleware(['auth', 'verified']
 
 Route::prefix('/events')->name('events.')->group(function () {
     Route::get('/', [EventController::class, 'index'])->name('index');
+    Route::get('/search', [EventController::class, 'search'])->name('search');
     Route::get('/{event}', [EventController::class, 'show'])->name('show');
     Route::get('/{event}/order', [EventController::class, 'order'])->middleware('auth')->name('order');
     Route::post('/{event}/reserve', [EventController::class, 'reserve'])->middleware('auth')->name('reserve');
@@ -51,7 +52,6 @@ Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->gro
 
     Route::prefix('/reservations')->name('reservations.')->group(function() {
         Route::get('/', [AdminReservationController::class, 'index'])->name('index');
-        Route::get('/{reservation}', [AdminReservationController::class, 'show'])->name('show');
         Route::get('/{reservation}/edit', [AdminReservationController::class, 'edit'])->name('edit');
         Route::get('/{reservation}/tickets', [AdminReservationController::class, 'tickets'])->name('tickets');
         Route::patch('/{reservation}', [AdminReservationController::class, 'update'])->name('update');
