@@ -6,6 +6,9 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
+import jQuery from 'jquery';
+window.$ = jQuery;
+
 document.addEventListener('DOMContentLoaded', function() {
     const selectElement = document.getElementById('roles');
     selectElement.addEventListener('change', function() {
