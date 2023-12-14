@@ -53,7 +53,7 @@ class ReservationController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('status', 'Tickets updated successfully');
+        return redirect()->back()->with('success', 'Tickets updated successfully');
     }
 
     /**
@@ -65,7 +65,7 @@ class ReservationController extends Controller
             'used' => false,
         ]);
 
-        return redirect()->back()->with('status', 'Tickets reset successfully');
+        return redirect()->back()->with('success', 'Tickets reset successfully');
     }
 
     /**

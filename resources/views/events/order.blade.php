@@ -72,7 +72,7 @@
                                     <input type="hidden" x-model="tickets" name="tickets" id="tickets" min="0"
                                         max="{{ $event->tickets }}" value="0">
                                     <button type="button"
-                                        @click="tickets < {{ $event->tickets }} ? tickets++ : tickets = {{ $event->tickets }}, totalPrice = (tickets * ticketPrice).toFixed(2)"
+                                        @click="tickets < {{ $event->ticketsLeft() }} ? tickets++ : tickets = {{ $event->ticketsLeft() }}, totalPrice = (tickets * ticketPrice).toFixed(2)"
                                         class="bg-gray-700 text-gray-100 rounded-full w-8 h-8 flex items-center justify-center ml-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">

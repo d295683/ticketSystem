@@ -15,28 +15,28 @@
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <div class="overflow-x-scroll mb-4">
+                    <div class="overflow-hidden">
                         <table class="min-w-full divide-y divide-gray-600">
                             <thead class="bg-gray-700">
                                 <tr>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase">
                                         ID
                                     </th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase">
                                         Name
                                     </th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase">
                                         Email
                                     </th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase">
                                         Role(s)
                                     </th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase">
                                         Actions
                                     </th>
                                 </tr>
@@ -64,8 +64,10 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="mt-4">
+                            {{ $users->links('vendor.pagination.custom') }}
+                        </div>
                     </div>
-                    {{ $users->links('vendor.pagination.custom') }}
                 </div>
             </div>
         </div>
