@@ -76,7 +76,7 @@
         $('#search-input').on('input', function() {
             clearTimeout(timeout);
             timeout = setTimeout(function() {
-                $.get(`/events/search?search=${$('#search-input').val()}`, function(
+                $.get(`{{route('events.search')}}?search=${$('#search-input').val()}`, function(
                     html) {
                     $('#event-list')
                         .html(html);
