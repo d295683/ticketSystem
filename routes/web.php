@@ -52,6 +52,7 @@ Route::prefix('/admin')->name('admin.')->middleware(['auth', 'role:admin'])->gro
 
     Route::prefix('/reservations')->name('reservations.')->group(function() {
         Route::get('/', [AdminReservationController::class, 'index'])->name('index');
+        Route::get('/show/{reservation}', [AdminReservationController::class, 'show'])->name('show');
         Route::get('/{reservation}/edit', [AdminReservationController::class, 'edit'])->name('edit');
         Route::get('/{reservation}/tickets', [AdminReservationController::class, 'tickets'])->name('tickets');
         Route::patch('/{reservation}', [AdminReservationController::class, 'update'])->name('update');

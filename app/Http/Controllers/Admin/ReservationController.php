@@ -30,6 +30,17 @@ class ReservationController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(Reservation $reservation)
+    {
+        $event = $reservation->event;
+        $tickets = $reservation->tickets()->paginate(5);
+
+        return view('dashboard.reservations.show', compact('event', 'reservation', 'tickets'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Reservation $reservation)
